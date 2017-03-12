@@ -12,6 +12,7 @@ public:
 public:
   virtual void save() = 0;
   virtual void load() = 0;
+  virtual void newGame() = 0;
 protected:
   class Scene {
   public:
