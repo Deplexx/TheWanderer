@@ -17,15 +17,16 @@ void Game::quit() {
   exit(0);
 }
 
-Game &Game::Scene::game() {return _outer;}
-
 Game::Game(Scene *init) : _init(init) {}
 
 void Game::setTheScene(Scene *next) {
   _init.reset(next);
 }
 
-Game::Scene::Scene(Game &outer) : _outer(outer) {}
+
+Game::Scene *Game::Scene::run() {
+  return _run();
+}
 
 void Game::Scene::printFile(const char *fName) {
   std::fstream fs;
@@ -37,3 +38,5 @@ void Game::Scene::printFile(const char *fName) {
 void Game::Scene::printFile(const std::string &fName) {
   Game::Scene::printFile(fName.c_str());
 }
+
+Game::Scene::Scene(std::function<Scene*()> run) : _run(run) {}

@@ -14,10 +14,8 @@ public:
   void save() override;
   void load() override;
   void newGame() override;
-private:
-  class Intro;
-  class MainMenu;
-  class Start;
+public:
+  TheWanderer();
 private:
   enum class _blinding;
   enum class _deafening;
@@ -42,8 +40,13 @@ private:
   
   unique_ptr<vector<_brand>> _brands;
   unique_ptr<vector<_item>> _items;
-public:
-  TheWanderer();
+private:
+  Scene *_initIntro();
+  Scene *_initMainMenu();
+  Scene *_initStart();
+  Scene *_initHill();
+  Scene *_initWoods();
+  Scene *_initDeepWoods();
 };
 
 #endif

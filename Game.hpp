@@ -1,6 +1,7 @@
 #ifndef _GAME_H
 #define _GAME_H
 
+#include <functional>
 #include <memory>
 
 using std::unique_ptr;
@@ -14,25 +15,25 @@ public:
   virtual void load() = 0;
   virtual void newGame() = 0;
 protected:
-  class Scene {
-  public:
-    virtual Scene *run() = 0;
-  protected:
-    Game &game();
-  protected:
-    Scene(Game &outer);
-  protected:
-    static void printFile(const char *fName);
-    static void printFile(const std::string &fName);
-  private:
-    Game &_outer;
-  };
+  class Scene;
 protected:
   Game(Scene *init);
 private:
   void setTheScene(Scene *next);
 private:
   unique_ptr<Scene> _init;
+};
+
+class Game::Scene {
+public:
+  Scene *run();
+public:
+  Scene(std::function<Scene*()> run);
+public:
+  static void printFile(const char *fName);
+  static void printFile(const std::string &fName);
+private:
+  std::function<Scene*()> _run;
 };
 
 #endif
