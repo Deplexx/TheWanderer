@@ -1,7 +1,7 @@
 #ifndef _SCROLL_H_
 #define _SCROLL_H_
 
-#include <iostream>
+#include <string>
 
 using std::string;
 

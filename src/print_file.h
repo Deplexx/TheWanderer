@@ -1,7 +1,7 @@
 #ifndef _PRINT_FILE_H_
 #define _PRINT_FILE_H_
 
-#include <iostream>
+#include <string>
 
 void print_file(std::string&& fname);
 
