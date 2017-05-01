@@ -1,15 +1,20 @@
 #ifndef _GAMEVARS_H_
 #define _GAMEVARS_H_
 
-#include <iostream>
+#include <string>
 #include <vector>
 
-using namespace std;
+using std::string;
+using std::vector;
 
-struct GameVars {
+struct game_vars {
+  static bool intro_complete;
+
   static bool hands_bound;
   static bool feet_bound;
   static bool blinded;
+
   static vector<string> items;
 };
+
 #endif

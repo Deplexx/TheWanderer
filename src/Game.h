@@ -1,9 +1,13 @@
 #ifndef _GAME_HPP_
 #define _GAME_HPP_
 
-void run();
-void save();
-void load();
-void new_game();
+#include "scene.h"
+
+class game_scene : public scene {
+private:    
+    scene _cli(scene_args args) override;
+}
+
+void game_run();
 
 #endif
