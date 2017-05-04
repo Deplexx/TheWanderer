@@ -5,8 +5,8 @@
 
 class game_scene : public scene {
 private:    
-    scene _cli(scene_args args) override;
-}
+    scene& _cli(scene_args args) override;
+};
 
 void game_run();
 
