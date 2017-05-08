@@ -1,5 +1,4 @@
 #include "game.h"
-#include "game_vars.h"
 #include "p1_wagon.h"
 #include "print_file.h"
 #include "read_line.h"
@@ -15,54 +14,49 @@ using std::endl;
 using std::string;
 using std::vector;
 
+using std::make_unique;
+
 static void save();
-static scene load();
-static scene new_game();
+static unique_ptr<scene> main_menu(scene_args);
 
-static void intro();
-static void main_menu();
+//game_scene
+unique_ptr<scene> game_scene::operator()() {
+  unique_ptr<scene> ret;  
 
-scene game_scene::_cli(scene_args args) {
-  //@TODO implement game cli logic
-  return this;
+  print_file(_fname);
+
+  while(!(ret = _cli(read_line()))); return ret;
 }
 
-scene s = game_scene("intro", intro);
+unique_ptr<scene> game_scene::_cli(scene_args args) {
+  //TODO implement game cli logic
+  return nullptr;
+}
+
+
+//game
+unique_ptr<scene> s = make_unique<game_scene>("intro", main_menu);
 
 void game_run() {
   while(true) {
-    s = s();
+    s = (*s)();
   }
 }
 
 void save() {}
 
-void load() {}
+static unique_ptr<scene> main_menu(scene_args args) {
+  int n;
 
-void new_game() {
-  game_vars::intro_complete = false;
+  cout << "1. New Adventure" << endl;
+  cout << "2. Load a Memorized Adventure" << endl;
+  cout << endl;
+  
+  n = std::stoi(args.at(0));
 
-  p1_wagon();
-}
-
-static void intro() {
-  print_file("intro");
-
-  return main_menu();
-}
-
-static scene main_menu() {  
-  while(true) {
-    int n;
-      
-    cout << "1. New Adventure" << endl;
-    cout << "2. Load a Memorized Adventure" << endl;
-    cout << endl;
-    
-    if(n == 1)
-      return scene(new_game);
-    else if(n == 2)
-      return scene(load);
-    else exit(0);
-  }
+  if(n == 1) //new game
+    return make_unique<game_scene>("p1_wagon_main", p1_wagon);
+  else if(n == 2) // load game
+    return make_unique<game_scene>();
+  else return make_unique<game_scene>();
 }

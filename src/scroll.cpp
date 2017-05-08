@@ -3,6 +3,12 @@
 #include <chrono>
 #include <thread>
 
+#include <iostream>
+
+using std::cout;
+using std::endl;
+using std::flush;
+
 using namespace std::chrono_literals;
 
 void scroll(string &&s) {

@@ -1,6 +1,8 @@
 #ifndef _P1_HILL_HPP_
 #define _P1_HILL_HPP_
 
-void p1_hill();
+#include "game.h"
+
+unique_ptr<scene> p1_hill(scene_args);
 
 #endif

@@ -2,51 +2,38 @@
 #include "p1_hill.h"
 #include "game_vars.h"
 
+#include "scene.h"
+
 #include <iostream>
+#include <memory>
+#include <string>
 
 using std::cin;
 using std::cout;
 using std::endl;
+using std::unique_ptr;
 
-static scene kick();
-static scene jump();
-static scene wait();
+using std::make_unique;
 
-scene p1_wagon(scene_args args) {
+unique_ptr<scene> p1_wagon(scene_args args) {
   int n;
 
   game_vars::hands_bound = true;
   game_vars::feet_bound = false;
   game_vars::blinded = true;
   
-  switch(std::stoi(args[0], &n)) {
+  n = std::stoi(args.at(0));
+
+  switch(n) {
   case 1:
-    return kick();
+    game_vars::feet_bound = true;  
+    return make_unique<game_scene>("p1_hill", p1_hill);
   case 2:
-    return jump();
+    game_vars::blinded = false;
   case 3:
-    return wait();
+    return make_unique<game_scene>("p1_hill", p1_hill);
   default:
     cout << "Invalid option." << endl;
+    return make_unique<game_scene>();
   }
-}
-
-static scene kick() {
-  game_vars::feet_bound = true;
-  print_file("p1_wagon_kick");
-
-  return p1_hill();
-}
-
-static scene jump() {
-  game_vars::blinded = false;
-  print_file("p1_wagon_jump");
-
-  return p1_hill();
-}
-
-static scene wait() {
-  print_file("p1_wagon_wait");
-
-  return p1_hill();
 }

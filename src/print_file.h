@@ -3,6 +3,7 @@
 
 #include <string>
 
+void print_file(std::string& fname);
 void print_file(std::string&& fname);
 
 #endif
